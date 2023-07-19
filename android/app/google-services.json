@@ -1,0 +1,91 @@
+{
+  "project_info": {
+    "project_number": "320434221609",
+    "firebase_url": "https://devfahimhasan-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "devfahimhasan",
+    "storage_bucket": "devfahimhasan.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:320434221609:android:7fed49b87a70579c076238",
+        "android_client_info": {
+          "package_name": "com.realityproshotsapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "320434221609-3riukg3j88sjrq0hdbgfd0jguugmhv9n.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAm5C1FWNtkKtj4L9AAFDKFpjEIjlNgkAg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "320434221609-3riukg3j88sjrq0hdbgfd0jguugmhv9n.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "320434221609-uoase6egrbc031k36satsid8k65sgoav.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.realtyproshots"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:320434221609:android:67dcb33fa73fa2ee076238",
+        "android_client_info": {
+          "package_name": "com.realtyproshots"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "320434221609-cs26oqcbad0qm8rph4k0bcqnhrdt4a78.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.realtyproshots",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "320434221609-3riukg3j88sjrq0hdbgfd0jguugmhv9n.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAm5C1FWNtkKtj4L9AAFDKFpjEIjlNgkAg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "320434221609-3riukg3j88sjrq0hdbgfd0jguugmhv9n.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "320434221609-uoase6egrbc031k36satsid8k65sgoav.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.realtyproshots"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
