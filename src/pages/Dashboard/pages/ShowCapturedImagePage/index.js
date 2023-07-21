@@ -39,7 +39,7 @@ class ShowCapturedImagePage extends React.Component {
 
   handleDidFocus = async () => {
     Orientation.unlockAllOrientations();
-    const capturedImages = this.props.navigation.getParam('imageURL');
+    const capturedImages = this.props.route.params.imageURL;
     this.setState({imagePath: capturedImages[0]});
     const permission = PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE;
     if (Platform.OS === 'android') {
@@ -65,7 +65,7 @@ class ShowCapturedImagePage extends React.Component {
   };
 
   onPressDeleteButton = () => {
-    const onBack = this.props.navigation.getParam('onBack', null);
+    const onBack = this.props.route.params.onBack;
     if (onBack) {
       onBack();
     }
@@ -137,11 +137,11 @@ class ShowCapturedImagePage extends React.Component {
 
   onPressKeepButton = async () => {
     const {navigation} = this.props;
-    const projectId = navigation.getParam('projectId');
+    const projectId = this.props.route.params.projectId;
     console.log('showImageScreen', projectId);
-    const capturedImages = this.props.navigation.getParam('imageURL');
-    const albumtitle = this.props.navigation.getParam('property');
-    const idOfPlace = this.props.navigation.getParam('placeId');
+    const capturedImages = this.props.route.params.imageURL;
+    const albumtitle = this.props.route.params.property;
+    const idOfPlace = this.props.route.params.placeId;
     let fileNames = [];
     //this part has to be done
     // console.log('idOfGoogle Places: ', idOfPlace);
@@ -195,7 +195,7 @@ class ShowCapturedImagePage extends React.Component {
         });
       }
       await saveData('PROPERTIES', JSON.stringify(properties));
-      const onBack = navigation.getParam('onBack', null);
+      const onBack = this.props.route.params.onBack;
       if (onBack) {
         onBack();
       }
@@ -218,7 +218,7 @@ class ShowCapturedImagePage extends React.Component {
 
   renderImage = () => {
     const {imagePath} = this.state;
-    const capturedImages = this.props.navigation.getParam('imageURL');
+    const capturedImages = this.props.route.params.imageURL;
     const imagesarray = capturedImages.map((image) => {
       return {source: {uri: image}};
     });
@@ -255,10 +255,10 @@ class ShowCapturedImagePage extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <NavigationEvents
+        {/* <NavigationEvents
           onDidFocus={this.handleDidFocus}
           onWillBlur={this.handleWillBlur}
-        />
+        /> */}
         <StatusBar hidden={true} />
         {this.renderImage()}
         {this.renderDeleteButton()}
@@ -268,3 +268,4 @@ class ShowCapturedImagePage extends React.Component {
   }
 }
 export default ShowCapturedImagePage;
+

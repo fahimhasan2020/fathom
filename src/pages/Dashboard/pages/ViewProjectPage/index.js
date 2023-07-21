@@ -59,8 +59,8 @@ class HomePage extends React.Component {
   getPageData = async () => {
     Orientation.lockToPortrait();
     let data = await getData('PROPERTIES');
-    const propertAddress = this.props.navigation.getParam('property');
-    let projectId = this.props.navigation.getParam('projectId');
+    const propertAddress = this.props.route.params.property;
+    let projectId = this.props.route.params.projectId;
     if (data) {
       data = JSON.parse(data);
       const selectedProperty = data.find(
@@ -160,7 +160,7 @@ class HomePage extends React.Component {
   };
 
   renderFirstImageWithTitle = () => {
-    const propertAddress = this.props.navigation.getParam('property');
+    const propertAddress = this.props.route.params.property;
     const { firstPhoto } = this.state;
     return (
       <View style={styles.subContainer}>
@@ -175,8 +175,8 @@ class HomePage extends React.Component {
 
   onPressSubmitProject = () => {
     if (this.state.photos.length > 0) {
-      const propertAddress = this.props.navigation.getParam('property');
-      const projectId = this.props.navigation.getParam('projectId');
+      const propertAddress = this.props.route.params.property;
+      const projectId = this.props.route.params.projectId;
       console.log('ViewProjectScreen', projectId);
       const { photos, googlePlaceId } = this.state;
       this.props.navigation.push('SubmitProjectPage', {
@@ -193,7 +193,7 @@ class HomePage extends React.Component {
 
   renderButton = () => {
     const { showAddMoreTile } = this.state;
-    const status = this?.props?.navigation?.getParam('uploadStatus');
+    const status = this.props.route.params.uploadStatus;
     return (
       <View style={styles.buttonContainer}>
         <TouchableOpacity
@@ -230,8 +230,8 @@ class HomePage extends React.Component {
 
   onPressOK = async () => {
     let data = await getData('PROPERTIES');
-    const propertAddress = this.props.navigation.getParam('property');
-    const projectId = this.props.navigation.getParam('projectId');
+    const propertAddress = this.props.route.params.property;
+    const projectId = this.props.route.params.projectId;
     data = JSON.parse(data);
     const photos = this.state.photos;
     const selectedPhotos = this.state.selectedPhotos;
@@ -294,9 +294,9 @@ class HomePage extends React.Component {
   };
 
   onPressAddMoreImages = () => {
-    const propertyAddress = this.props.navigation.getParam('property');
-    const placeId = this.props.navigation.getParam('placeId');
-    const projectId = this.props.navigation.getParam('projectId');
+    const propertyAddress = this.props.route.params.property;
+    const placeId = this.props.route.params.placeId;
+    const projectId = this.props.route.params.projectId;
     console.log('ViewProjectPage', projectId);
     this.props.navigation.navigate('CameraPage', {
       property: propertyAddress,
@@ -374,7 +374,7 @@ class HomePage extends React.Component {
     return (
       <MainFrame>
         <StatusBar hidden={false} />
-        <NavigationEvents onDidFocus={this.getPageData} />
+        {/* <NavigationEvents onDidFocus={this.getPageData} /> */}
         {!showCheckbox ? (
           <HeaderBarWithBackComponent
             title="Project Review"

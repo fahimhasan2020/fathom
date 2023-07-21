@@ -103,7 +103,7 @@ class SubmitProjectPage extends React.Component {
 
   onPressSubmitProject = async () => {
     let data = await getData('PROPERTIES');
-    const placeId = this.props.navigation.getParam('placeId');
+    const placeId = this.props.route.params.placeId;
     data = JSON.parse(data);
     data = data.map((property, index) => {
       if (property.googlePlaceId === placeId) {
@@ -132,11 +132,11 @@ class SubmitProjectPage extends React.Component {
 
   SubmitProjectAPI = async () => {
     let userData = await getData('USER');
-    const placeId = this.props.navigation.getParam('placeId');
-    const projectId = this.props.navigation.getParam('projectId');
+    const placeId = tthis.props.route.params.placeId;
+    const projectId = this.props.route.params.projectId;
     let data = await getData('PROPERTIES');
     userData = JSON.parse(userData);
-    const imagesList = this.props.navigation.getParam('ImagesList');
+    const imagesList = this.props.route.params.ImagesList;
     let { placeTitle, message } = this.state;
     let userTitle = '';
     if (userData.contact) {
@@ -222,8 +222,8 @@ class SubmitProjectPage extends React.Component {
   uploadImagesOnAWS = async () => {
     let userData = await getData('USER');
     let data = await getData('PROPERTIES');
-    const placeId = this.props.navigation.getParam('placeId');
-    const projectId = this.props.navigation.getParam('projectId');
+    const placeId = this.props.route.params.placeId;
+    const projectId = this.props.route.params.projectId;
     console.log('submitProjectPage', projectId);
     userData = JSON.parse(userData);
     const dateStrUploaded = await getData(`${projectId}Datestr`);
@@ -242,7 +242,7 @@ class SubmitProjectPage extends React.Component {
 
     let uploadedImages = await getData(projectId);
     console.log('344-All', uploadedImages);
-    const imagesList = this.props.navigation.getParam('ImagesList');
+    const imagesList = this.props.route.params.ImagesList;
 
     const bucketName = 'rps-app-photos';
     var totalLength = (imagesList.length - 1) * 5;
@@ -371,8 +371,8 @@ class SubmitProjectPage extends React.Component {
   };
 
   renderTotalPriceSection = (unitprice) => {
-    const totalShots = this.props.navigation.getParam('ImagesList').length - 1;
-    const propertyTitle = this.props.navigation.getParam('propertyAddress');
+    const totalShots = this.props.route.params.ImagesList.length - 1;
+    const propertyTitle = this.props.route.params.propertyAddress;
     return (
       <View style={styles.mainView}>
         <Text style={styles.propertyText}>{propertyTitle}</Text>
@@ -388,7 +388,7 @@ class SubmitProjectPage extends React.Component {
   };
 
   renderOrderDetailsList = (unitprice) => {
-    const totalShots = this.props.navigation.getParam('ImagesList').length - 1;
+    const totalShots = this.props.route.params.ImagesList.length - 1;
     return (
       <View>
         <Text style={styles.orderDetailsText}>Order Details</Text>

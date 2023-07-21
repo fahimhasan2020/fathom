@@ -5,7 +5,7 @@ import styles from './styles';
 import { getData, saveData } from '../../../../common/Helper';
 import images from '../../../../common/Images';
 import GridViewComponent from '../../../Dashboard/components/GridView';
-import { NavigationEvents, useNavigation } from '@react-navigation/native';
+import { NavigationEvents, useNavigation,useRoute  } from '@react-navigation/native';
 import {
   SensorTypes,
   accelerometer,
@@ -16,8 +16,10 @@ import Orientation from 'react-native-orientation-locker';
 setUpdateIntervalForType(SensorTypes.accelerometer, 700);
 const CameraPage = () => {
   const devices = useCameraDevices('wide-angle-camera');
+  const route = useRoute();
+  const navigation = useNavigation();
   const device = devices.back;
-  const cameraRef =useRef<Camera>(null);
+  const cameraRef = useRef(null);
   const [dataUri, setDataUri] = useState([]);
   const [lensTypes, setLensTypes] = useState([]);
   const [showRed, setShowRed] = useState(false);
@@ -54,7 +56,6 @@ const CameraPage = () => {
   };
 
   const handleDidFocus = async () => {
-    const navigation = useNavigation();
     console.log('did focus called!');
     Orientation.lockToPortrait();
     resetStates();
@@ -70,7 +71,7 @@ const CameraPage = () => {
       setSelectedLens(lastCam);
       setSelectedLensIndex(lastCamIndex);
     }
-    const propertAddress = navigation.getParam('property');
+    const propertAddress = route.params.property;
     if (data) {
       data = JSON.parse(data);
       const selectedProperty = data.find(
@@ -141,7 +142,7 @@ const CameraPage = () => {
   };
 
   const takePicture = async () => {
-
+    console.log('Started:');
     setShowTimer(true);
     setTimerCount(3)
     const intervalId = setInterval(() => {
@@ -152,15 +153,16 @@ const CameraPage = () => {
       }
     }, 1000);
 
-    setTimeout(async () => {
-      const navigation = useNavigation();
-
-      const projectId = navigation.getParam('projectId');
+    setTimeout(async () => {  
+      console.log('StaSnappingted:');
+      const projectId = route.params.projectId;
       setIsSnapping(true);
       const data = [];
       let options = {};
-      if (cameraRef) {
+      if (cameraRef.current) {
         if (Platform.OS === 'ios') {
+          setTimerCount(0);
+          setShowTimer(false);
           options = {
             base64: true,
             quality: 0.5,
@@ -173,6 +175,7 @@ const CameraPage = () => {
             quality: 0.5,
             exposure: 0,
           });
+          console.log('Now checked:',imagearray);
           options = {
             base64: true,
             quality: 0.5,
@@ -195,36 +198,37 @@ const CameraPage = () => {
           options = {
             quality: 0.5,
           };
-          let imagearray = await cameraRef.current.takePhoto({
-            flash: 'on',
-            base64: true,
+          let imagearray = await cameraRef.current.takePhoto({base64: true,
             quality: 0.5,
-            exposure: 0,
           });
-          for (let image of imagearray.pictures) {
-            data.push(image.uri);
-          }
+          console.log('grabbaa',imagearray);
+          data.push(imagearray.path);
+          // for (let image of imagearray.pictures) {
+          //   data.push(image.uri);
+          // }
+         await setTimerCount(0);
+         await  setShowTimer(false);
         }
+        const propertAddress = route.params.property;
+        const googleplaceId = route.params.placeId;
+        navigation.navigate('ShowCapturedImagePage', {
+          imageURL: data,
+          property: propertAddress,
+          placeId: googleplaceId,
+          projectId: projectId,
+          onBack: () => {
+            setBtnEnabled(true);
+          },
+        });
       }
-      const propertAddress = navigation.getParam('property', '');
-      const googleplaceId = navigation.getParam('placeId', '');
-      navigation.navigate('ShowCapturedImagePage', {
-        imageURL: data,
-        property: propertAddress,
-        placeId: googleplaceId,
-        projectId: projectId,
-        onBack: () => {
-          setBtnEnabled(true);
-        },
-      });
-    }, 1000);
+     
+    }, 3000);
   };
 
   const donePressed = () => {
-    const navigation = useNavigation();
-    const propertAddress = navigation.getParam('property');
-    const placeId = navigation.getParam('placeId');
-    const projectId = navigation.getParam('projectId');
+    const propertAddress = route.params.property;
+    const placeId = route.params.placeId;
+    const projectId = route.params.projectId;
     console.log('cameraPage', projectId);
     // navigation.goBack();
     navigation.navigate('ViewProjectPage', {
@@ -303,6 +307,7 @@ const CameraPage = () => {
     <View style={styles.mainContainer}>
       <StatusBar hidden={true} />
       <Camera
+        ref={cameraRef}
         style={styles.preview}
         device={device}
         photo={true}
